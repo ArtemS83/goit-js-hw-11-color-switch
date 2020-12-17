@@ -26,13 +26,11 @@ const bodyRef = document.querySelector('body');
 startRef.addEventListener('click', startColorSwitchHendler);
 
 function startColorSwitchHendler() {
-  console.log('START body');
   startRef.removeEventListener('click', startColorSwitchHendler);
   stopRef.addEventListener('click', stoptColorSwitchHendler);
   bodyRef.style.backgroundColor = randomColor(colors);
   intervalId = setInterval(() => {
     bodyRef.style.backgroundColor = randomColor(colors);
-    console.log('body setInterval');
   }, 1000);
 }
 
@@ -40,7 +38,6 @@ function stoptColorSwitchHendler() {
   startRef.addEventListener('click', startColorSwitchHendler);
   stopRef.removeEventListener('click', stoptColorSwitchHendler);
   clearInterval(intervalId);
-  console.log('STOP setInterval', bodyRef.style.backgroundColor);
 }
 
 /*========Решение путем добавления(удаления) на кнопки состояния 'disabled'=======*/
@@ -56,13 +53,11 @@ disabledStopRef.addEventListener('click', disabledStoptColorSwitchHendler);
 disabledStopRef.setAttribute('disabled', 'disabled');
 
 function disabledStartColorSwitchHendler() {
-  console.log('START DIV');
   disabledStopRef.removeAttribute('disabled');
   divRef.style.backgroundColor = randomColor(colors);
   disabledStartRef.setAttribute('disabled', 'disabled');
   id = setInterval(() => {
     divRef.style.backgroundColor = randomColor(colors);
-    console.log(' DIV setInterval');
   }, 1000);
 }
 
@@ -70,6 +65,5 @@ function disabledStoptColorSwitchHendler() {
   disabledStartRef.removeAttribute('disabled');
   disabledStopRef.setAttribute('disabled', 'disabled');
   clearInterval(id);
-  console.log('STOP DIV setInterval', divRef.style.backgroundColor);
 }
 //================================================================//

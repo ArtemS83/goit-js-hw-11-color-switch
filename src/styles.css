@@ -22,6 +22,25 @@ button {
   margin: 20px;
   font-size: 25px;
   font-weight: 700;
+  /* background-color: aqua; */
+}
+button:focus,
+button:hover {
+  background-color: rgb(170, 63, 241);
+}
+
+#disabled button:focus,
+#disabled button:hover {
+  background-color: rgb(95, 233, 14);
+}
+#disabled button {
+  display: inline-block;
+  width: 200px;
+  height: 50px;
+  margin: 20px;
+  font-size: 25px;
+  font-weight: 700;
+  /* background-color: rgb(127, 143, 122); */
 }
 #disabled {
   height: 200px;
