@@ -8,30 +8,6 @@ const colors = [
   '#009688',
   '#795548',
 ];
-
-let intervalId = null;
-
-const srartRef = document.querySelector('#start');
-const stopRef = document.querySelector('#stop');
-const bodyRef = document.querySelector('body');
-
-srartRef.addEventListener('click', startColorSwitchHendler);
-stopRef.addEventListener('click', stoptColorSwitchHendler);
-
-function startColorSwitchHendler() {
-  srartRef.setAttribute('disabled', 'disabled');
-  intervalId = setInterval(() => {
-    bodyRef.style.backgroundColor = randomColor(colors);
-    console.log(randomColor(colors)); // для отслеживания цвета в консоли
-  }, 1000);
-}
-
-function stoptColorSwitchHendler() {
-  srartRef.removeAttribute('disabled');
-  clearInterval(intervalId);
-  console.log('STOP setInterval');
-}
-
 function randomColor(arr) {
   return arr[randomIntegerFromInterval(arr.length - 1)];
 }
@@ -39,3 +15,61 @@ function randomColor(arr) {
 function randomIntegerFromInterval(max, min = 0) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+/*========Решение путем добавления(удаления) на кнопки слушателей EventListener=======*/
+let intervalId = null;
+
+const startRef = document.querySelector('#start');
+const stopRef = document.querySelector('#stop');
+const bodyRef = document.querySelector('body');
+
+startRef.addEventListener('click', startColorSwitchHendler);
+
+function startColorSwitchHendler() {
+  console.log('START body');
+  startRef.removeEventListener('click', startColorSwitchHendler);
+  stopRef.addEventListener('click', stoptColorSwitchHendler);
+  bodyRef.style.backgroundColor = randomColor(colors);
+  intervalId = setInterval(() => {
+    bodyRef.style.backgroundColor = randomColor(colors);
+    console.log('body setInterval');
+  }, 1000);
+}
+
+function stoptColorSwitchHendler() {
+  startRef.addEventListener('click', startColorSwitchHendler);
+  stopRef.removeEventListener('click', stoptColorSwitchHendler);
+  clearInterval(intervalId);
+  console.log('STOP setInterval', bodyRef.style.backgroundColor);
+}
+
+/*========Решение путем добавления(удаления) на кнопки состояния 'disabled'=======*/
+let id = null;
+
+const disabledStartRef = document.querySelector('#disabled-start');
+const disabledStopRef = document.querySelector('#disabled-stop');
+const divRef = document.querySelector('#disabled');
+
+disabledStartRef.addEventListener('click', disabledStartColorSwitchHendler);
+disabledStopRef.addEventListener('click', disabledStoptColorSwitchHendler);
+
+disabledStopRef.setAttribute('disabled', 'disabled');
+
+function disabledStartColorSwitchHendler() {
+  console.log('START DIV');
+  disabledStopRef.removeAttribute('disabled');
+  divRef.style.backgroundColor = randomColor(colors);
+  disabledStartRef.setAttribute('disabled', 'disabled');
+  id = setInterval(() => {
+    divRef.style.backgroundColor = randomColor(colors);
+    console.log(' DIV setInterval');
+  }, 1000);
+}
+
+function disabledStoptColorSwitchHendler() {
+  disabledStartRef.removeAttribute('disabled');
+  disabledStopRef.setAttribute('disabled', 'disabled');
+  clearInterval(id);
+  console.log('STOP DIV setInterval', divRef.style.backgroundColor);
+}
+//================================================================//
